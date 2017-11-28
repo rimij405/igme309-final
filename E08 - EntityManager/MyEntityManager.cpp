@@ -79,7 +79,7 @@ Model* Simplex::MyEntityManager::GetModel(String a_sUniqueID)
 	else
 		return nullptr;
 }
-RigidBody* Simplex::MyEntityManager::GetRigidBody(uint a_uIndex)
+MyRigidBody* Simplex::MyEntityManager::GetRigidBody(uint a_uIndex)
 {
 	// do nothing if nothing
 	if (m_uEntityCount == 0) return nullptr;
@@ -91,7 +91,7 @@ RigidBody* Simplex::MyEntityManager::GetRigidBody(uint a_uIndex)
 	return m_entityList[a_uIndex]->GetRigidBody();
 	return nullptr;
 }
-RigidBody* Simplex::MyEntityManager::GetRigidBody(String a_sUniqueID)
+MyRigidBody* Simplex::MyEntityManager::GetRigidBody(String a_sUniqueID)
 {
 	MyEntity* entity;
 	entity = MyEntity::GetEntity(a_sUniqueID);
