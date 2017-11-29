@@ -21,12 +21,14 @@ void Application::InitVariables(void)
 
 	//creeper
 	//m_pEntityMngr->AddEntity("Minecraft\\Creeper.obj", "Creeper");
+	//m_pEntityMngr->AddEntity("Projectile.fbx", "Creeper");
 	m_pEntityMngr->AddEntity("Pyramid.obj", "Creeper");
 	//m_pEntityMngr->SetModelMatrix(glm::scale(vector3(0.001f, 0.001f, 0.001f)) * ToMatrix4(m_qCreeper), "Creeper");
 
 	//steve
 	//m_pEntityMngr->AddEntity("Minecraft\\Steve.obj", "Steve");
-	m_pEntityMngr->AddEntity("Tile.obj", "Steve");
+	//m_pEntityMngr->AddEntity("Tile.fbx", "Steve");
+	m_pEntityMngr->AddEntity("Tile2.obj", "Steve");
 
 	//add an entity
 	//m_pEntityMngr->AddEntity("Minecraft\\Cow.obj", "Cow");
@@ -40,7 +42,7 @@ void Application::InitVariables(void)
 
 	//add an entity
 	//m_pEntityMngr->AddEntity("Minecraft\\Pig.obj", "Pig");
-	m_pEntityMngr->AddEntity("Projectile.obj", "Pig");
+	m_pEntityMngr->AddEntity("Projectile2.obj", "Pig");
 	//set the model matrix
 	m_pEntityMngr->SetModelMatrix(glm::translate(vector3(-2.0f, -1.0f, -1.0f)));
 
