@@ -428,6 +428,16 @@ void Application::ProcessKeyboard(void)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
 		m_pCameraMngr->MoveVertical(m_fMovementSpeed * fMultiplier);
 #pragma endregion
+
+#pragma region Game Loop Debug Controls
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+	{
+		// manually decrement player's health
+		if (m_uPlayerHealth != 0)
+			m_uPlayerHealth--;
+	}
+#pragma endregion
+
 	//move the creeper
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		m_v3Creeper.x -= 0.1f;

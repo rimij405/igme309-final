@@ -17,6 +17,9 @@ namespace Simplex
 	//Adding Application to the Simplex namespace
 class Application
 {
+	// game loop attributes
+	uint m_uPlayerHealth = 10; // when player's health reaches 0 it's game over
+
 	MyEntityManager* m_pEntityMngr = nullptr; //Entity Manager
 
 	vector3 m_v3Creeper; //position of the creeper
