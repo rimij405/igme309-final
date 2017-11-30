@@ -7,6 +7,7 @@ Date: 11/29/2017
 #define __PLAYER_H_
 
 #include "Definitions.h"
+#include "GameObject.h"
 
 // Add the player class to the simplex namespace.
 namespace Simplex 
@@ -19,6 +20,9 @@ namespace Simplex
 	private:
 
 	#pragma region Private Fields
+
+		// TODO.
+
 		// The health of a player.
 		uint m_uPlayerHealth = 100;
 
@@ -26,6 +30,8 @@ namespace Simplex
 	#pragma endregion
 
 	#pragma region Private Methods
+
+
 
 	#pragma endregion
 
