@@ -35,3 +35,4 @@ Z_DELETE/
 *.exe
 *.out
 *.app
+*.vxcsproj*
