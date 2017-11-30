@@ -15,6 +15,9 @@ Date: 2017/06
 #include "GameObject.h"
 #include "Player.h"
 
+//used in making the enemies and walls
+#include <sstream>
+
 namespace Simplex
 {
 	//Adding Application to the Simplex namespace
@@ -28,6 +31,11 @@ namespace Simplex
 
 		vector3 m_v3Creeper; //position of the creeper
 		quaternion m_qCreeper; //orientation for the creeper
+
+		//vector of vector3 to store the spawn points of the enemies
+		std::vector<vector3> enemySpawnPoints;
+		//number of spawn points
+		float numEnemySpawn = 100;
 		
 	private:
 		String m_sProgrammer = "Alberto Bobadilla - labigm@rit.edu"; //programmer
@@ -143,6 +151,18 @@ namespace Simplex
 		OUTPUT: ---
 		*/
 		void Release(void);
+		/*
+		USAGE: Creates the enemy spawn points
+		ARGUMENTS: ---
+		OUTPUT: ---
+		*/
+		void EnemySpawnPoints(void);
+		/*
+		USAGE: creates the wall spawn points and then spawns in the walls
+		ARGUMENTS: ---
+		OUTPUT: ---
+		*/
+		void SpawnWalls(void);
 	#pragma endregion
 
 	#pragma region Main Loop

@@ -29,13 +29,13 @@ void Application::InitVariables(void)
 	//creeper
 	//m_pEntityMngr->AddEntity("Minecraft\\Creeper.obj", "Creeper");
 	//m_pEntityMngr->AddEntity("Projectile.fbx", "Creeper");
-	m_pEntityMngr->AddEntity("Pyramid.obj", "Creeper");
+	//m_pEntityMngr->AddEntity("Pyramid.obj", "Creeper");
 	//m_pEntityMngr->SetModelMatrix(glm::scale(vector3(0.001f, 0.001f, 0.001f)) * ToMatrix4(m_qCreeper), "Creeper");
 
 	//steve
 	//m_pEntityMngr->AddEntity("Minecraft\\Steve.obj", "Steve");
 	//m_pEntityMngr->AddEntity("Tile.fbx", "Steve");
-	m_pEntityMngr->AddEntity("Tile2.obj", "Steve");
+	//m_pEntityMngr->AddEntity("Tile2.obj", "Steve");
 
 	//add an entity
 	//m_pEntityMngr->AddEntity("Minecraft\\Cow.obj", "Cow");
@@ -46,12 +46,22 @@ void Application::InitVariables(void)
 	//m_pEntityMngr->AddEntity("Minecraft\\Zombie.obj", "Zombie");
 	////set the model matrix
 	//m_pEntityMngr->SetModelMatrix(glm::translate(vector3(0.0f, -2.5f, 0.0f)));
-
+	//spawn the enemies in
+	EnemySpawnPoints();
+	for (int i = 0; i < numEnemySpawn; i++)
+	{
+		std::stringstream enemyName;
+		enemyName << "enemy " << i;
+		m_pEntityMngr->AddEntity("Pyramid.obj", enemyName.str());
+		m_pEntityMngr->SetModelMatrix(glm::translate(vector3(enemySpawnPoints[i].x, enemySpawnPoints[i].y, enemySpawnPoints[i].z)));
+	}
+	//spawn walls in
+	SpawnWalls();
 	//add an entity
 	//m_pEntityMngr->AddEntity("Minecraft\\Pig.obj", "Pig");
-	m_pEntityMngr->AddEntity("Projectile2.obj", "Pig");
+	//m_pEntityMngr->AddEntity("Projectile2.obj", "Pig");
 	//set the model matrix
-	m_pEntityMngr->SetModelMatrix(glm::translate(vector3(-2.0f, -1.0f, -1.0f)));
+	//m_pEntityMngr->SetModelMatrix(glm::translate(vector3(-2.0f, -1.0f, -1.0f)));
 
 }
 void Application::Update(void)
@@ -71,13 +81,7 @@ void Application::Update(void)
 		// in game
 		std::cout << "In Game Loop!\n";
 
-		//Set model matrix to the creeper
-		matrix4 mCreeper = glm::translate(m_v3Creeper) * ToMatrix4(m_qCreeper) * ToMatrix4(m_qArcBall);
-		m_pEntityMngr->SetModelMatrix(mCreeper, "Creeper");
-
-		//Set model matrix to Steve
-		matrix4 mSteve = glm::translate(vector3(2.5f, 0.0f, 0.0f)) * glm::rotate(IDENTITY_M4, -55.0f, AXIS_Z);
-		m_pEntityMngr->SetModelMatrix(mSteve, "Steve");
+		//
 
 		//Move the last entity added slowly to the right
 		matrix4 lastMatrix = m_pEntityMngr->GetModelMatrix();// get the model matrix of the last added
@@ -125,4 +129,57 @@ void Application::Release(void)
 	
 	//release GUI
 	ShutdownGUI();
+}
+
+//calculate the spawn points of the enemies
+void Application::EnemySpawnPoints(void)
+{
+	//calculate the circle to spawn the enemies
+	//calculate the diff theta by using the nuber of subdivisions
+	//the radius of the spawn circle
+	float radius = numEnemySpawn;
+	float subDivisions = numEnemySpawn;
+	float theta = 0;
+	float diff = (2 * PI) / subDivisions;
+	
+	//calculate the points based on the number of sub divisions radius and diffTheta
+	for (int i = 0; i < numEnemySpawn; i++)
+	{
+		enemySpawnPoints.push_back(vector3{ (radius * cos(theta)),0.0f, (radius * sin(theta)) });
+		theta += diff;
+	}
+
+}
+//calculate the spawn points of the walls and spawn them
+void Application::SpawnWalls(void) 
+{
+	//calculate the points for the arena circles walls to spawn on
+	//calculate the diff theta by using the nuber of subdivisions
+	//the radius of the spawn circle (Make subdivisions = to the radius
+	float radius = 150.0f;
+	float subDivisions = 150.0f;
+	float theta = 0;
+	float diff = (2 * PI) / subDivisions;
+	//create a vector to store the points
+	std::vector<vector3> wallSpawnPoints;
+	//calculate the points based on the number of sub divisions radius and diffTheta
+	for (int i = 0; i < subDivisions; i++)
+	{
+		wallSpawnPoints.push_back(vector3{ (radius * cos(theta)), 0.0f, (radius * sin(theta)) });
+		theta += diff;
+	}
+	//spawn in all of the walls and rotate them.
+	for (int i = 0; i < subDivisions; i++)
+	{
+		std::stringstream wallName;
+		wallName << "wall " << i;
+		m_pEntityMngr->AddEntity("Tile2.obj", wallName.str());
+		//calculate the rotation of the walls
+		float rotationDeg = 0;
+		float rotationDegStep = 360 / subDivisions;
+		m_pEntityMngr->SetModelMatrix(glm::translate(vector3(wallSpawnPoints[i].x, wallSpawnPoints[i].y, wallSpawnPoints[i].z)) * glm::rotate(IDENTITY_M4, rotationDeg, AXIS_Z));
+		rotationDeg += rotationDegStep;
+
+	}
+
 }
