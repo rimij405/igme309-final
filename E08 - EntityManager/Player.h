@@ -7,13 +7,14 @@ Date: 11/29/2017
 #define __PLAYER_H_
 
 #include "Definitions.h"
+#include "GameObject.h"
 
 // Add the player class to the simplex namespace.
 namespace Simplex 
 {
 
 	// The Player class wraps information and data regarding the Player object.
-	class Player 
+	class Player : public GameObject
 	{
 
 	private:
@@ -32,13 +33,21 @@ namespace Simplex
 	public:
 
 	#pragma region Public Properties
+		uint GetPlayerHealth(void);
+
+		void SetPlayerHealth(uint a_uPlayerHealth);
 
 	#pragma endregion
 
 	#pragma region Public Methods
 
 	#pragma endregion
+	
+	#pragma region //	Constructor / Init / Destructor
+		
+		Player(void);
 
+	#pragma endregion
 	};
 
 }

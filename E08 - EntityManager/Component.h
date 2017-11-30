@@ -16,7 +16,7 @@ namespace Simplex {
 	protected:
 		// Component type assigned on construction of the component.
 		// Every object can only have one type of a component.
-		uint m_uComponentType = 0;
+		uint m_uComponentType = -1;
 
 		// Name given to the component.
 		String m_sName = "Component";
@@ -28,6 +28,16 @@ namespace Simplex {
 #pragma region //	Constructor / Init / Destructor
 
 		Component(void);
+
+		Component(uint a_uComponentType, String a_sName);
+
+#pragma endregion
+
+#pragma region // Accessors
+
+		uint GetComponentType();
+
+		String GetName();
 
 #pragma endregion
 

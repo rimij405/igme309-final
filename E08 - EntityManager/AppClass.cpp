@@ -1,4 +1,5 @@
 #include "AppClass.h"
+#include "GameObject.h"
 using namespace Simplex;
 void Application::InitVariables(void)
 {
@@ -18,6 +19,24 @@ void Application::InitVariables(void)
 
 	//Entity Manager
 	m_pEntityMngr = MyEntityManager::GetInstance();
+
+	// Instantiate Player
+	m_pPlayer = new Player();
+
+	// Add component
+	m_pPlayer->AddComponent(Component(0, "Test Component"));
+
+	// Can't add it again...makes sense
+	m_pPlayer->AddComponent(Component(0, "Test Component"));
+
+
+	// Test components
+	std::cout <<
+		"Component 0: " << m_pPlayer->HasComponent(0) <<
+		"\nHas Any components: " << !m_pPlayer->IsEmpty() << "\n";
+
+	// test out tostring
+	std::cout << m_pPlayer->toString();
 
 	//creeper
 	//m_pEntityMngr->AddEntity("Minecraft\\Creeper.obj", "Creeper");
@@ -59,7 +78,7 @@ void Application::Update(void)
 	CameraRotation();
 
 	// game loop debug
-	if (m_uPlayerHealth != 0)
+	if (m_pPlayer->GetPlayerHealth() != 0)
 	{
 		// in game
 		std::cout << "In Game Loop!\n";
@@ -113,7 +132,9 @@ void Application::Release(void)
 {
 	//release the entity manager
 	m_pEntityMngr->ReleaseInstance();
-
+	
+	SafeDelete(m_pPlayer);
+	
 	//release GUI
 	ShutdownGUI();
 }
