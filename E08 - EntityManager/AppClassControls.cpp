@@ -430,11 +430,17 @@ void Application::ProcessKeyboard(void)
 #pragma endregion
 
 #pragma region Game Loop Debug Controls
+
+	//std::cout << uHealth << "\n";
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
 	{
 		// manually decrement player's health
-		if (m_uPlayerHealth != 0)
-			m_uPlayerHealth--;
+		//if (m_uPlayerHealth != 0)
+		//	m_uPlayerHealth--;
+		uint uHealth = m_pPlayer->GetPlayerHealth();
+		if (uHealth != 0)
+			//m_pPlayer->SetPlayerHealth(uHealth - 1);
+			m_pPlayer->SetPlayerHealth(0);
 	}
 #pragma endregion
 

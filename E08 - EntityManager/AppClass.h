@@ -12,6 +12,9 @@ Date: 2017/06
 
 #include "MyEntityManager.h"
 
+#include "GameObject.h"
+#include "Player.h"
+
 namespace Simplex
 {
 	//Adding Application to the Simplex namespace
@@ -19,6 +22,7 @@ namespace Simplex
 	{
 		// game loop attributes
 		uint m_uPlayerHealth = 10; // when player's health reaches 0 it's game over
+		Player* m_pPlayer = nullptr;
 
 		MyEntityManager* m_pEntityMngr = nullptr; //Entity Manager
 

@@ -141,14 +141,14 @@ namespace Simplex
 		-	a_cComponent -> Component to be added to the GameObject.
 		OUTPUT: ---
 		*/
-		bool AddComponent(uint a_uComponentType, Component const& a_cComponent) const;
+		bool AddComponent(uint a_uComponentType, Component& a_cComponent);
 
 		/*
 		USAGE: Adds component to GameObject and returns a reference to either the same component or the component already on the GameObject, if it exists.
 		ARGUMENTS: a_cComponent -> Component to be added to the GameObject.
 		OUTPUT: ---
 		*/
-		Component& AddComponent(Component const& a_cComponent) const;
+		Component& AddComponent(Component& a_cComponent);
 
 #pragma endregion
 
