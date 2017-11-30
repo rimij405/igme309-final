@@ -156,29 +156,36 @@ void Application::SpawnWalls(void)
 	//calculate the points for the arena circles walls to spawn on
 	//calculate the diff theta by using the nuber of subdivisions
 	//the radius of the spawn circle (Make subdivisions = to the radius
-	float radius = 150.0f;
-	float subDivisions = 150.0f;
-	float theta = 0;
-	float diff = (2 * PI) / subDivisions;
-	//create a vector to store the points
-	std::vector<vector3> wallSpawnPoints;
-	//calculate the points based on the number of sub divisions radius and diffTheta
+	float radius = 48.0f;
+	float subDivisions = 30.0f;
+	float theta = 0.0f;
+	float deg = 90.0f;
+	float diff = (2.0f * PI) / subDivisions;
+	float degStep = 360 / subDivisions;
+	float x;
+	float z;
+	glm::mat4 rotMat;
+
+	//spawn in all of the walls and rotate them
 	for (int i = 0; i < subDivisions; i++)
 	{
-		wallSpawnPoints.push_back(vector3{ (radius * cos(theta)), 0.0f, (radius * sin(theta)) });
-		theta += diff;
-	}
-	//spawn in all of the walls and rotate them.
-	for (int i = 0; i < subDivisions; i++)
-	{
+		// Get the obj
 		std::stringstream wallName;
 		wallName << "wall " << i;
 		m_pEntityMngr->AddEntity("Tile2.obj", wallName.str());
-		//calculate the rotation of the walls
-		float rotationDeg = 0;
-		float rotationDegStep = 360 / subDivisions;
-		m_pEntityMngr->SetModelMatrix(glm::translate(vector3(wallSpawnPoints[i].x, wallSpawnPoints[i].y, wallSpawnPoints[i].z)) * glm::rotate(IDENTITY_M4, rotationDeg, AXIS_Z));
-		rotationDeg += rotationDegStep;
+
+		// calculate position
+		x = radius * cos(theta);
+		z = radius * sin(theta);
+
+		rotMat = glm::translate(vector3(x, 0.0f, z));
+		rotMat = glm::rotate(rotMat, deg, AXIS_Y);
+
+		m_pEntityMngr->SetModelMatrix(rotMat);
+
+		// update rotation for rad and degrees
+		theta += diff;
+		deg -= degStep;
 
 	}
 
