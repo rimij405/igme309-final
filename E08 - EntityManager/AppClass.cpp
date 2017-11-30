@@ -22,19 +22,7 @@ void Application::InitVariables(void)
 
 	// Instantiate Player
 	m_pPlayer = new Player();
-
-	// Add component
-	m_pPlayer->AddComponent(Component(0, "Test Component"));
-
-	// Can't add it again...makes sense
-	m_pPlayer->AddComponent(Component(0, "Test Component"));
-
-
-	// Test components
-	std::cout <<
-		"Component 0: " << m_pPlayer->HasComponent(0) <<
-		"\nHas Any components: " << !m_pPlayer->IsEmpty() << "\n";
-
+	
 	// test out tostring
 	std::cout << m_pPlayer->toString();
 

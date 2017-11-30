@@ -148,7 +148,7 @@ namespace Simplex
 		ARGUMENTS: a_cComponent -> Component to be added to the GameObject.
 		OUTPUT: ---
 		*/
-		Component& AddComponent(Component& a_cComponent);
+		// Component& AddComponent(Component& a_cComponent);
 
 #pragma endregion
 
