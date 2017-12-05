@@ -78,7 +78,7 @@ void Application::Update(void)
 	if (m_pPlayer->GetPlayerHealth() != 0)
 	{
 		// in game
-		std::cout << "In Game Loop!\n";
+		//std::cout << "In Game Loop!\n";
 
 		//spawn an enemy at a spawn point once every second has elapsed and set its velocity toward the center where the player is (is the timer in second because if it is not this wont work correctly)
 		if (fTime >= 2) 

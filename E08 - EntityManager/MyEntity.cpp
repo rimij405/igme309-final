@@ -54,7 +54,7 @@ void Simplex::MyEntity::Release(void)
 	m_pMeshMngr = nullptr;
 	//it is not the job of the entity to release the model, 
 	//it is for the mesh manager to do so.
-	m_pModel = nullptr; 
+	m_pModel = nullptr;
 	SafeDelete(m_pRigidBody);
 	m_IDMap.erase(m_sUniqueID);
 }

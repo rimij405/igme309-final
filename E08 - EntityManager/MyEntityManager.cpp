@@ -157,11 +157,36 @@ void Simplex::MyEntityManager::Update(void)
 			m_entityList[i]->SetModelMatrix(modelMatrix);
 		}
 	}
+
+	// Used to check entity type for collision resolution
+	String name1;
+	String name2;
+
+	// checks collisions
 	for (uint i = 0; i < m_uEntityCount; i++)
 	{
 		for (uint j = i + 1; j < m_uEntityCount; j++)
 		{
-			m_entityList[i]->IsColliding(m_entityList[j]);
+			// collision resolution
+			if (m_entityList[i]->IsColliding(m_entityList[j])) {
+				
+				// gets the parsed name of each object
+				name1 = m_entityList[i]->GetUniqueID();
+				name2 = m_entityList[j]->GetUniqueID();
+
+				name1 = name1.substr(0, name1.find(' '));
+				name2 = name2.substr(0, name2.find(' '));
+
+				// tests to see if a bullet hit a wall or an enemy
+				if (name1 == "wall" && name2 == "bullet") {
+					RemoveEntity(m_entityList[j]->GetUniqueID());
+				}
+				else if (name1 == "enemy" && name2 == "bullet") {
+					RemoveEntity(m_entityList[i]->GetUniqueID());
+					RemoveEntity(m_entityList[j]->GetUniqueID());
+				}
+
+			}
 		}
 	}
 }
