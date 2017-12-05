@@ -17,6 +17,16 @@ MyRigidBody* Simplex::MyEntity::GetRigidBody(void){	return m_pRigidBody; }
 bool Simplex::MyEntity::IsInitialized(void){ return m_bInMemory; }
 String Simplex::MyEntity::GetUniqueID(void) { return m_sUniqueID; }
 void Simplex::MyEntity::SetAxisVisible(bool a_bSetAxis) { m_bSetAxis = a_bSetAxis; }
+
+//store and return the velocities 
+void Simplex::MyEntity::SetVelocity(vector3 newVelocity)
+{
+	velocity = newVelocity;
+}
+vector3 Simplex::MyEntity::GetVelocity(void)
+{
+	return velocity;
+}
 //  MyEntity
 void Simplex::MyEntity::Init(void)
 {

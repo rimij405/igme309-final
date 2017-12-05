@@ -147,6 +147,16 @@ MyEntityManager::~MyEntityManager(){Release();};
 // other methods
 void Simplex::MyEntityManager::Update(void)
 {
+	//move the entities
+	for (uint i = 0; i < m_uEntityCount; i++) 
+	{
+		if (m_entityList[i]->GetVelocity() != vector3(0.0f,0.0f,0.0f))
+		{
+			matrix4 modelMatrix = m_entityList[i]->GetModelMatrix();
+			modelMatrix = glm::translate(modelMatrix, m_entityList[i]->GetVelocity());
+			m_entityList[i]->SetModelMatrix(modelMatrix);
+		}
+	}
 	for (uint i = 0; i < m_uEntityCount; i++)
 	{
 		for (uint j = i + 1; j < m_uEntityCount; j++)

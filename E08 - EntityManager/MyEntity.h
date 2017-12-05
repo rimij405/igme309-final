@@ -17,6 +17,7 @@ class MyEntity
 	bool m_bInMemory = false; //loaded flag
 	bool m_bSetAxis = false; //render axis flag
 	String m_sUniqueID = ""; //Unique identifier name
+	vector3 velocity = vector3(0.0f, 0.0f, 0.0f); //the velocity of the entity normaly is 0
 
 	Model* m_pModel = nullptr; //Model associated with this Entity
 	MyRigidBody* m_pRigidBody = nullptr; //Rigid Body associated with this Entity
@@ -125,6 +126,10 @@ public:
 	OUTPUT: ---
 	*/
 	void SetAxisVisible(bool a_bSetAxis = true);
+
+	void SetVelocity(vector3 newVelocity);
+
+	vector3 GetVelocity(void);
 
 private:
 	/*

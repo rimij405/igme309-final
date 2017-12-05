@@ -142,6 +142,7 @@ public:
 	*/
 	void AddEntityToRenderList(String a_sUniqueID, bool a_bRigidBody = false);
 	
+	
 private:
 	/*
 	Usage: constructor

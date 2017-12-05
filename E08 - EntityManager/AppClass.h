@@ -35,7 +35,9 @@ namespace Simplex
 		//vector of vector3 to store the spawn points of the enemies
 		std::vector<vector3> enemySpawnPoints;
 		//number of spawn points
-		float numEnemySpawn = 100;
+		int numEnemySpawn = 45;
+		//number of projectiles that are spawned
+		int numProjectileSpawn = 0;
 		
 	private:
 		String m_sProgrammer = "Alberto Bobadilla - labigm@rit.edu"; //programmer

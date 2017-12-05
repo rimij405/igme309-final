@@ -46,15 +46,8 @@ void Application::InitVariables(void)
 	//m_pEntityMngr->AddEntity("Minecraft\\Zombie.obj", "Zombie");
 	////set the model matrix
 	//m_pEntityMngr->SetModelMatrix(glm::translate(vector3(0.0f, -2.5f, 0.0f)));
-	//spawn the enemies in
+	//calculate the enemy spawn points
 	EnemySpawnPoints();
-	for (int i = 0; i < numEnemySpawn; i++)
-	{
-		std::stringstream enemyName;
-		enemyName << "enemy " << i;
-		m_pEntityMngr->AddEntity("Pyramid.obj", enemyName.str());
-		m_pEntityMngr->SetModelMatrix(glm::translate(vector3(enemySpawnPoints[i].x, enemySpawnPoints[i].y, enemySpawnPoints[i].z)));
-	}
 	//spawn walls in
 	SpawnWalls();
 	//add an entity
@@ -66,6 +59,12 @@ void Application::InitVariables(void)
 }
 void Application::Update(void)
 {
+	//create a timer (this timer is from the 14B Lerp Video by Alberto)
+	static uint uClock = m_pSystem->GenClock();
+	static float fTime = 0.0f;
+	float fDelta = m_pSystem->GetDeltaTime(uClock);
+	fTime += fDelta;
+
 	//Update the system so it knows how much time has passed since the last call
 	m_pSystem->Update();
 
@@ -81,12 +80,37 @@ void Application::Update(void)
 		// in game
 		std::cout << "In Game Loop!\n";
 
-		//
+		//spawn an enemy at a spawn point once every second has elapsed and set its velocity toward the center where the player is (is the timer in second because if it is not this wont work correctly)
+		if (fTime >= 2) 
+		{
+			fTime = 0.0f;
+			int randomSpawnNumber = rand() % (numEnemySpawn - 1);
+			std::stringstream enemyName;
+			enemyName << "enemy " << randomSpawnNumber;
+			m_pEntityMngr->AddEntity("Pyramid.obj", enemyName.str());
+			m_pEntityMngr->SetModelMatrix(glm::translate(vector3(enemySpawnPoints[randomSpawnNumber].x, enemySpawnPoints[randomSpawnNumber].y, enemySpawnPoints[randomSpawnNumber].z)));
+			//make the enemy seek the center by assigning it a velocity
+			int index = m_pEntityMngr->GetEntityIndex(enemyName.str());
+			m_pEntityMngr->GetEntity(index)->SetVelocity(glm::normalize(-vector3(enemySpawnPoints[randomSpawnNumber].x, enemySpawnPoints[randomSpawnNumber].y, enemySpawnPoints[randomSpawnNumber].z)) * 0.1f);
+		}
+
+		//when the spacen bar is pressed fire the bullet infront of the player along the players forward vector
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+		{
+			std::stringstream projectileName;
+			projectileName << "bullet " << numProjectileSpawn;
+			m_pEntityMngr->AddEntity("Projectile2.obj", projectileName.str());
+			m_pEntityMngr->SetModelMatrix(glm::translate(vector3(m_pCameraMngr->GetForward().x, m_pCameraMngr->GetForward().y, m_pCameraMngr->GetForward().z)));
+			numProjectileSpawn++;
+			//Take the cameras forward vector and make the bullets velocity one unit in that direction store the velocity with the entity
+			int index = m_pEntityMngr->GetEntityIndex(projectileName.str());
+			m_pEntityMngr->GetEntity(index)->SetVelocity(m_pCameraMngr->GetForward());
+		}
 
 		//Move the last entity added slowly to the right
-		matrix4 lastMatrix = m_pEntityMngr->GetModelMatrix();// get the model matrix of the last added
-		lastMatrix *= glm::translate(IDENTITY_M4, vector3(0.01f, 0.0f, 0.0f)); //translate it
-		m_pEntityMngr->SetModelMatrix(lastMatrix); //return it to its owner
+		//matrix4 lastMatrix = m_pEntityMngr->GetModelMatrix();// get the model matrix of the last added
+		//lastMatrix *= glm::translate(IDENTITY_M4, vector3(0.01f, 0.0f, 0.0f)); //translate it
+		//m_pEntityMngr->SetModelMatrix(lastMatrix); //return it to its owner
 
 		//Update Entity Manager
 		m_pEntityMngr->Update();
