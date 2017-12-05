@@ -11,9 +11,9 @@ void Application::InitVariables(void)
 
 	//Set the position and target of the camera
 	m_pCameraMngr->SetPositionTargetAndUp(
-		vector3(0.0f, 0.0f, 13.0f), //Position
-		vector3(0.0f, 0.0f, 12.0f),	//Target
-		AXIS_Y);					//Up
+		vector3(0.0f, 0.0f, 0.0f), //Position
+		vector3(0.0f, 0.0f, 10.0f),	//Target
+		AXIS_Y);				//Up
 
 	m_pLightMngr->SetPosition(vector3(0.0f, 3.0f, 13.0f), 1); //set the position of first light (0 is reserved for ambient light)
 
@@ -91,20 +91,24 @@ void Application::Update(void)
 			m_pEntityMngr->SetModelMatrix(glm::translate(vector3(enemySpawnPoints[randomSpawnNumber].x, enemySpawnPoints[randomSpawnNumber].y, enemySpawnPoints[randomSpawnNumber].z)));
 			//make the enemy seek the center by assigning it a velocity
 			int index = m_pEntityMngr->GetEntityIndex(enemyName.str());
-			m_pEntityMngr->GetEntity(index)->SetVelocity(glm::normalize(-vector3(enemySpawnPoints[randomSpawnNumber].x, enemySpawnPoints[randomSpawnNumber].y, enemySpawnPoints[randomSpawnNumber].z)) * 0.1f);
+			m_pEntityMngr->GetEntity(index)->SetVelocity(glm::normalize(-vector3(enemySpawnPoints[randomSpawnNumber].x, enemySpawnPoints[randomSpawnNumber].y, enemySpawnPoints[randomSpawnNumber].z)) * 0.2f);
 		}
 
 		//when the spacen bar is pressed fire the bullet infront of the player along the players forward vector
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && isPressed == false)
 		{
+			isPressed = true;
 			std::stringstream projectileName;
 			projectileName << "bullet " << numProjectileSpawn;
 			m_pEntityMngr->AddEntity("Projectile2.obj", projectileName.str());
-			m_pEntityMngr->SetModelMatrix(glm::translate(vector3(m_pCameraMngr->GetForward().x, m_pCameraMngr->GetForward().y, m_pCameraMngr->GetForward().z)));
+			m_pEntityMngr->SetModelMatrix(glm::translate(vector3(m_pCameraMngr->GetForward().x, m_pCameraMngr->GetForward().y, m_pCameraMngr->GetForward().z)) * glm::scale(vector3(0.2f, 0.2f, 0.2f)));
 			numProjectileSpawn++;
 			//Take the cameras forward vector and make the bullets velocity one unit in that direction store the velocity with the entity
 			int index = m_pEntityMngr->GetEntityIndex(projectileName.str());
-			m_pEntityMngr->GetEntity(index)->SetVelocity(m_pCameraMngr->GetForward());
+			m_pEntityMngr->GetEntity(index)->SetVelocity(m_pCameraMngr->GetForward() * 6.0f);
+		}
+		else if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+			isPressed = false;
 		}
 
 		//Move the last entity added slowly to the right
@@ -161,7 +165,7 @@ void Application::EnemySpawnPoints(void)
 	//calculate the circle to spawn the enemies
 	//calculate the diff theta by using the nuber of subdivisions
 	//the radius of the spawn circle
-	float radius = numEnemySpawn;
+	float radius = numEnemyRad;
 	float subDivisions = numEnemySpawn;
 	float theta = 0;
 	float diff = (2 * PI) / subDivisions;
@@ -180,8 +184,8 @@ void Application::SpawnWalls(void)
 	//calculate the points for the arena circles walls to spawn on
 	//calculate the diff theta by using the nuber of subdivisions
 	//the radius of the spawn circle (Make subdivisions = to the radius
-	float radius = 48.0f;
-	float subDivisions = 30.0f;
+	float radius = 80.0f;
+	float subDivisions = 50.0f;
 	float theta = 0.0f;
 	float deg = 90.0f;
 	float diff = (2.0f * PI) / subDivisions;
