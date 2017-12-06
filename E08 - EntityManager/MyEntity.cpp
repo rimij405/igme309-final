@@ -122,6 +122,10 @@ bool Simplex::MyEntity::IsColliding(MyEntity* const other)
 
 	return m_pRigidBody->IsColliding(other->GetRigidBody());
 }
+void Simplex::MyEntity::ClearCollisionList(void)
+{
+	m_pRigidBody->ClearCollidingList();
+}
 MyEntity* Simplex::MyEntity::GetEntity(String a_sUniqueID)
 {
 	//look the entity based on the unique id

@@ -122,7 +122,7 @@ void Application::Update(void)
 		//Add objects to render list
 		m_pEntityMngr->AddEntityToRenderList(-1, true);
 	}
-	else
+ 	else
 	{
 		// game over
 		std::cout << "Game Over!\n";

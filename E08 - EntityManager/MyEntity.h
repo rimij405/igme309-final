@@ -131,6 +131,13 @@ public:
 
 	vector3 GetVelocity(void);
 
+	/*
+	USAGE: Clears the collision list of this entity
+	ARGUMENTS: ---
+	OUTPUT: ---
+	*/
+	void ClearCollisionList(void);
+
 private:
 	/*
 	Usage: Deallocates member fields
