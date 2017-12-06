@@ -469,6 +469,7 @@ void Application::ProcessKeyboard(void)
 	}
 
 	//Orient the creeper
+	/*
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
 	{
 		if (m_bModifier)
@@ -494,6 +495,7 @@ void Application::ProcessKeyboard(void)
 	{
 		m_qCreeper = quaternion();
 	}
+	*/
 }
 //Joystick
 void Application::ProcessJoystick(void)

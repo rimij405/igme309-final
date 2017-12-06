@@ -24,7 +24,7 @@ namespace Simplex
 	class Application
 	{
 		// game loop attributes
-		uint m_uPlayerHealth = 10; // when player's health reaches 0 it's game over
+		uint m_uPlayerHealth = 3; // when player's health reaches 0 it's game over
 		Player* m_pPlayer = nullptr;
 
 		MyEntityManager* m_pEntityMngr = nullptr; //Entity Manager

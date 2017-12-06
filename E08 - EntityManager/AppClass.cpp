@@ -4,7 +4,7 @@ using namespace Simplex;
 void Application::InitVariables(void)
 {
 	////Change this to your name and email
-	//m_sProgrammer = "Alberto Bobadilla - labigm@rit.edu";
+	//m_sProgrammer = "The SQL";
 
 	////Alberto needed this at this position for software recording.
 	//m_pWindow->setPosition(sf::Vector2i(710, 0));
@@ -103,13 +103,14 @@ void Application::Update(void)
 		//Checks to see if player got hit
 		if (m_pEntityMngr->UpdatePlayerHP() == true) {
 			m_pPlayer->SetPlayerHealth(m_pPlayer->GetPlayerHealth() - 1);
+			m_uPlayerHealth = m_pPlayer->GetPlayerHealth();
 		}
 
 	}
  	else
 	{
 		// game over
-		std::cout << "Game Over!\n";
+		//std::cout << "Game Over!\n";
 	}
 }
 void Application::Display(void)
