@@ -17,6 +17,7 @@ namespace Simplex
 		uint m_uEntityCount = 0; //number of elements in the list
 		PEntity* m_mEntityArray = nullptr; //array of MyEntity pointers
 		static MyEntityManager* m_pInstance; // Singleton pointer
+		bool isHit = false; //Checks if the player was hit
 	public:
 		/*
 		Usage: Gets the singleton pointer
@@ -142,6 +143,13 @@ namespace Simplex
 		OUTPUT: ---
 		*/
 		void AddEntityToRenderList(String a_sUniqueID, bool a_bRigidBody = false);
+		/*
+		USAGE: Checks the health of the player entity
+		ARGUMENTS: ---
+		OUTPUT: bool
+		*/
+		bool UpdatePlayerHP();
+
 	private:
 		/*
 		Usage: constructor

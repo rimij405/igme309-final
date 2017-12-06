@@ -26,35 +26,14 @@ void Application::InitVariables(void)
 	// test out tostring
 	std::cout << m_pPlayer->toString();
 
-	//creeper
-	//m_pEntityMngr->AddEntity("Minecraft\\Creeper.obj", "Creeper");
-	//m_pEntityMngr->AddEntity("Projectile.fbx", "Creeper");
-	//m_pEntityMngr->AddEntity("Pyramid.obj", "Creeper");
-	//m_pEntityMngr->SetModelMatrix(glm::scale(vector3(0.001f, 0.001f, 0.001f)) * ToMatrix4(m_qCreeper), "Creeper");
+	// Makes a makeshift player hitbox
+	m_pEntityMngr->AddEntity("Projectile.fbx", "player");
+	m_pEntityMngr->SetModelMatrix(glm::translate(vector3(0.0f, 0.0f, 0.0f)) * glm::scale(vector3(0.5f, 0.5f, 0.5f)));
 
-	//steve
-	//m_pEntityMngr->AddEntity("Minecraft\\Steve.obj", "Steve");
-	//m_pEntityMngr->AddEntity("Tile.fbx", "Steve");
-	//m_pEntityMngr->AddEntity("Tile2.obj", "Steve");
-
-	//add an entity
-	//m_pEntityMngr->AddEntity("Minecraft\\Cow.obj", "Cow");
-	////set the model matrix
-	//m_pEntityMngr->SetModelMatrix(glm::translate(vector3(2.0f, -1.5f, -1.0f)));
-	
-	//add an entity
-	//m_pEntityMngr->AddEntity("Minecraft\\Zombie.obj", "Zombie");
-	////set the model matrix
-	//m_pEntityMngr->SetModelMatrix(glm::translate(vector3(0.0f, -2.5f, 0.0f)));
 	//calculate the enemy spawn points
 	EnemySpawnPoints();
 	//spawn walls in
 	SpawnWalls();
-	//add an entity
-	//m_pEntityMngr->AddEntity("Minecraft\\Pig.obj", "Pig");
-	//m_pEntityMngr->AddEntity("Projectile2.obj", "Pig");
-	//set the model matrix
-	//m_pEntityMngr->SetModelMatrix(glm::translate(vector3(-2.0f, -1.0f, -1.0f)));
 
 }
 void Application::Update(void)
@@ -78,7 +57,6 @@ void Application::Update(void)
 	if (m_pPlayer->GetPlayerHealth() != 0)
 	{
 		// in game
-		//std::cout << "In Game Loop!\n";
 
 		//spawn an enemy at a spawn point once every second has elapsed and set its velocity toward the center where the player is (is the timer in second because if it is not this wont work correctly)
 		if (fTime >= 2) 
@@ -121,6 +99,12 @@ void Application::Update(void)
 
 		//Add objects to render list
 		m_pEntityMngr->AddEntityToRenderList(-1, true);
+
+		//Checks to see if player got hit
+		if (m_pEntityMngr->UpdatePlayerHP() == true) {
+			m_pPlayer->SetPlayerHealth(m_pPlayer->GetPlayerHealth() - 1);
+		}
+
 	}
  	else
 	{

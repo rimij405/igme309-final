@@ -180,13 +180,20 @@ void Simplex::MyEntityManager::Update(void)
 				name1 = name1.substr(0, name1.find(' '));
 				name2 = name2.substr(0, name2.find(' '));
 
-				if (name1 == "wall" && name2 == "bullet") {
+				if (name1 == "player" && name2 == "enemy") {
+					isHit = true;
 					RemoveEntity(m_mEntityArray[j]->GetUniqueID());
 				}
-				else if (name1 == "enemy" && name2 == "bullet") {
+
+				if (name1 == "enemy" && name2 == "bullet") {
 					RemoveEntity(m_mEntityArray[j]->GetUniqueID());
 					RemoveEntity(m_mEntityArray[i]->GetUniqueID());
 				}
+
+				if (name1 == "wall" && name2 == "bullet") {
+					RemoveEntity(m_mEntityArray[j]->GetUniqueID());
+				}
+
 			}
 		}
 	}
@@ -306,5 +313,12 @@ void Simplex::MyEntityManager::AddEntityToRenderList(String a_sUniqueID, bool a_
 	if (pTemp)
 	{
 		pTemp->AddToRenderList(a_bRigidBody);
+	}
+}
+bool Simplex::MyEntityManager::UpdatePlayerHP() 
+{
+	if (isHit == true) {
+		isHit = false;
+		return true;
 	}
 }

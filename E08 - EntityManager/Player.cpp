@@ -13,5 +13,5 @@ void Player::SetPlayerHealth(uint a_uPlayerHealth)
 
 Player::Player(void) : GameObject("Player")
 {
-
+	m_uPlayerHealth = 3;
 }
